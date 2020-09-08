@@ -15,6 +15,7 @@ class LiftsController < ApplicationController
 
   # POST /lifts
   def create
+    client = Client.find(params[:client_id])
     @lift = Lift.new(lift_params)
 
     if @lift.save

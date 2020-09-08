@@ -11,5 +11,7 @@ Client.create(name: "Nicole")
 Client.create(name: "Zach")
 Client.create(name: "Chris")
 
+Lift.create(name: 'bench', weight: 400, client_id: 17)
+
 
 
