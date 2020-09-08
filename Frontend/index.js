@@ -76,6 +76,8 @@ function newLiftForm(){
 
 function displayLifts(lift){
     const liftHeader = document.createElement('h6')
+    liftHeader.innerText = `${lift.name}, ${lift.weight}`
+    liftHeader.id = `lift-${lift.id}`
     const delButton = document.createElement('button')
     delButton.innerText = "Delete Lift"
     liftHeader.innerText = `${lift.name}, ${lift.weight}`

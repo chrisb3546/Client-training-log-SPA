@@ -37,7 +37,9 @@ class LiftsController < ApplicationController
 
   # DELETE /lifts/1
   def destroy
-    @lift.destroy
+    lift = Lift.find_by(params[:id])
+    lift.destroy
+    render json: {message: 'success'}
   end
 
   private

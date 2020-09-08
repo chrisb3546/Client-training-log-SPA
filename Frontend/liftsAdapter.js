@@ -53,6 +53,14 @@ class LiftsAdapter{
 
 
         removeLift(){
-            
+            let id = this.parentNode.id.split('-')[1]
+            fetch(`${Lifts_url}/${id}`,{
+                method: "DELETE",
+                headers: {
+                "Content-Type": "application/json",
+                Accepts: "application/json"
+                }})
+                .then(resToJson)
+                .then(lift => {this.parentNode.remove()})
+            }
         }
-}

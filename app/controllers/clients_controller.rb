@@ -36,7 +36,7 @@ class ClientsController < ApplicationController
   # DELETE /clients/1
   def destroy
     client = Client.find_by(params[:id])
-    @client.destroy
+    client.destroy
     render json: {message: 'success'}
   end
 
