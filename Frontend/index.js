@@ -1,21 +1,26 @@
 const Clients_URL = "http://localhost:3000/clients"
 const main = document.querySelector('main')
-document.addEventListener('DOMContentLoaded', getClients)
+const clientsAdapter = new ClientsAdapter
+
+
+
+document.addEventListener('DOMContentLoaded', clientsAdapter.getClients)
 
 
 function resToJson(res){
+
     return res.json()
 }
 
-function getClients(){
-    fetch(Clients_URL)
-    .then(resToJson)
-    .then(function(clients){
-        clients.forEach(function (client){
-            displayClients(client)
-    })
-         })
-}
+// function getClients(){
+//     fetch(Clients_URL)
+//     .then(resToJson)
+//     .then(function(clients){
+//         clients.forEach(function (client){
+//             displayClients(client)
+//     })
+//          })
+// }
 
 
 function displayClients(client){
