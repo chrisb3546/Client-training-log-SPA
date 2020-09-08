@@ -4,6 +4,7 @@ class ClientsAdapter{
        
     }
 
+
     getClients(){
         fetch(Clients_URL)
         .then(resToJson)
@@ -14,6 +15,45 @@ class ClientsAdapter{
             })
         })
     }
+
+    createClients(e){
+        e.preventDefault()
+        let name = clientName.value
+        let configObj = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                name
+                
+            })
+        }
+        
+        fetch(Clients_URL, configObj)
+         .then(resToJson)
+         .then(function(client){
+            
+         
+         displayClients(client)
+        })
+        
+        clientForm.reset()
+        
+    }
+
+    deleteClient(){
+        let clientId = this.id.split('-')[1]
+        fetch(`${Clients_URL}/${clientId}`,{
+            method: "DELETE",
+           })
+            .then(res => {
+                res.json()})
+            .then(client => {this.parentNode.remove()})
+        }
+    
+    
 
         
 }
