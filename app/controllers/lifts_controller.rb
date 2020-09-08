@@ -16,10 +16,11 @@ class LiftsController < ApplicationController
   # POST /lifts
   def create
     client = Client.find(params[:client_id])
-    @lift = Lift.new(lift_params)
-
+    @lift = client.lifts.build(lift_params)
+    
     if @lift.save
       render json: @lift, status: :created, location: @lift
+      
     else
       render json: @lift.errors, status: :unprocessable_entity
     end
