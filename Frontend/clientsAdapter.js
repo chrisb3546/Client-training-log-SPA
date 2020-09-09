@@ -4,6 +4,7 @@ class ClientsAdapter{
        
     }
 
+    
 
     getClients(){
         fetch(Clients_URL)
@@ -18,6 +19,12 @@ class ClientsAdapter{
 
     createClients(e){
         e.preventDefault()
+        debugger
+        if (clientName.value == ""){
+            alert("Field Cannot be Empty")
+    
+        }
+        else{
         let name = clientName.value
         let configObj = {
             method: "POST",
@@ -40,20 +47,66 @@ class ClientsAdapter{
         })
         
         clientForm.reset()
-        
+    }
     }
 
     deleteClient(){
         let clientId = this.id.split('-')[1]
+        this.parentNode
+        
         fetch(`${Clients_URL}/${clientId}`,{
             method: "DELETE",
            })
             .then(res => {
-                res.json()})
-            .then(client => {this.parentNode.remove()})
+                return res.json()})
+                
+            .then(client => {
+                this.parentNode.remove()})
         }
     
-    
+        updateClient(e){
+            
+            
+
+            let name = document.getElementById('name').value
+
+            // this.parentNode.innerText.split(' ')[0]
+            
+   
+            let configObj = {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json"
+                },
+                body: JSON.stringify({
+                    name 
+                        
+                })
+            }
+            fetch(`${Clients_URL}/${clienttId}`, configObj)
+            .then(resToJson)
+            .then(client=> {
+                
+               let div = document.getElementById(editingClientId)  
+                       
+                div.querySelector('h2').innerText = client.name
+              
+                
+                
+              
+                editing = false 
+                editingClienttId = null
+                editingClientId = null
+                editingClientName = null
+               
+                submit.innerText = "Add Lift"
+                resetForm()
+                
+              
+                
+            })
+        }
 
         
 }
