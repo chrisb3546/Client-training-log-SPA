@@ -6,7 +6,7 @@ const liftsAdapter = new LiftsAdapter
 const clientForm = document.getElementById('ClientForm')
 const clientName = document.getElementById('name')
 const submit = document.getElementById("submit")
-
+const ul = document.createElement('ul')
 
 document.addEventListener('DOMContentLoaded', clientsAdapter.getClients)
 
@@ -36,6 +36,8 @@ const removeForm = (e) =>  e.target.parentElement.remove()
 
 function displayClients(client){
     const div = document.createElement('div')
+    const clientUl = document.createElement('ul')
+    clientUl.id = `list-${client.id}`
     div.id = `parent-${client.id}`
     const clientListName = document.createElement('h2')
     clientListName.id = `client-${client.id}`
@@ -54,6 +56,7 @@ function displayClients(client){
     delButton.innerText = "Delete"
     main.appendChild(div)
     div.appendChild(clientListName)
+    div.appendChild(clientUl)
     div.appendChild(delButton)
     div.appendChild(addLiftBtn)
     div.appendChild(seeLiftBtn)
@@ -62,6 +65,7 @@ function displayClients(client){
     addLiftBtn.addEventListener('click', newLiftForm)
     seeLiftBtn.addEventListener('click', liftsAdapter.getLifts)
     editBtn.addEventListener('click',  editClient)
+    
 }
 
 let editing = false 
@@ -97,26 +101,41 @@ function newLiftForm(){
     liftForm.appendChild(closeForm)
     liftForm.addEventListener('submit', liftsAdapter.createLift)
     closeForm.addEventListener('click', removeForm)
-
-    
-
- 
 }
 
-
+letClientLiftId = null
 
 function displayLifts(lift){
     if (!document.getElementById(`lift-${lift.id}`)){
-    const liftHeader = document.createElement('h6')
-    liftHeader.innerText = `${lift.name}, ${lift.weight}`
-    liftHeader.id = `lift-${lift.id}`
-    const delButton = document.createElement('button')
-    delButton.innerText = "Delete Lift"
-    liftHeader.innerText = `${lift.name}, ${lift.weight}`
-    let client = document.getElementById(`client-${lift.client_id}`)
-    client.appendChild(liftHeader)
-    liftHeader.appendChild(delButton)
-    delButton.addEventListener('click', liftsAdapter.removeLift)
+        const liftHeader = document.createElement('h4')
+        liftHeader.innerText = `${lift.name}, ${lift.weight}`
+        liftHeader.id = `lift-${lift.id}`
+        liftHeader.innerText = `${lift.name}, ${lift.weight}`
+        const delButton = document.createElement('button')
+        delButton.innerText = "Delete Lift"
+        const closeLiftsButton = document.createElement('button')
+        closeLiftsButton.innerText = "Close Lifts"
+        closeLiftsButton.id = `closeButton-${lift.client_id}`
+        let client = document.getElementById(`client-${lift.client_id}`)
+        let parent = client.parentElement
+        let container = parent.children[1]
+        container.appendChild(liftHeader)
+        liftHeader.appendChild(delButton)
+        delButton.addEventListener('click', liftsAdapter.removeLift)
+        if (!document.getElementById(`closeButton-${lift.client_id}`)){
+            parent.appendChild(closeLiftsButton)
+            closeLiftsButton.addEventListener('click', closeLifts)
+        }
+    
+   
     }
+
+   
+}
+
+function closeLifts(container){
+    let list = this.parentElement.children[1]
+    list.innerText = ""
+    
 }
 

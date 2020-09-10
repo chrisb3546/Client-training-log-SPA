@@ -15,42 +15,43 @@ class LiftsAdapter{
         let client_id = clientId
         if (liftName.value == ""){
             alert("Field Cannot be Empty")
-    
         }
         else{
             let configObj = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json"
-                },
-                body: JSON.stringify({
-                    name, 
-                    weight, 
-                    client_id
-                })
-                }
-        fetch(Lifts_url, configObj)
-        .then(resToJson)
-        .then(function(lift){
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify({
+                name, 
+                weight, 
+                client_id
+            })
+            }
+            fetch(Lifts_url, configObj)
+            .then(resToJson)
+            .then(function(lift){
             displayLifts(lift)
-        })
-        liftForm.reset()
+            })
+            liftForm.remove()
         }
     }
 
     getLifts(){
-        fetch(Lifts_url)
+        let clientId = this.id.split(' ')[1]
+        fetch(`${Clients_URL}/${clientId}/lifts`)
         .then(resToJson)
         .then(function(lifts) {
            lifts.forEach(function (l){
-               let lift = new Lift(l.id, l.name, l.weight, l.client_id)
-                displayLifts(lift)
-                }
-            )}
+            let lift = new Lift(l.id, l.name, l.weight, l.client_id)
+            displayLifts(lift)
+            }
+        )}
 
     )}  
 
+    
 
     removeLift(){
         let id = this.parentNode.id.split('-')[1]

@@ -3,9 +3,14 @@ class LiftsController < ApplicationController
 
   # GET /lifts
   def index
+    if params[:client_id] && @client = Client.find_by_id(params[:client_id])
+      @lifts = @client.lifts
+      render json: @lifts
+    else 
     @lifts = Lift.all
 
     render json: @lifts
+    end 
   end
 
   # GET /lifts/1
