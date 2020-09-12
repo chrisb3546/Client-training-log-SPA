@@ -1,6 +1,6 @@
 class LiftsAdapter{
-    constructor(url){
-        this.lifts_url = 'http://localhost:3000/lifts'
+    constructor(){
+        
        
     }
     
@@ -32,7 +32,7 @@ class LiftsAdapter{
             fetch(Lifts_url, configObj)
             .then(resToJson)
             .then(function(lift){
-            displayLifts(lift)
+                displayLifts(lift)
             })
             liftForm.remove()
         }

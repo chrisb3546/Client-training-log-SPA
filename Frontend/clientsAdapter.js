@@ -1,12 +1,7 @@
 class ClientsAdapter{
-    constructor(url){
-        this.Clients_url = 'http://localhost:3000/clients'
-       
-    }
-
     
 
-    getClients(){
+     getClients(){
         fetch(Clients_URL)
         .then(resToJson)
         .then(function(clients){
@@ -14,6 +9,7 @@ class ClientsAdapter{
                 let client = new Client(c.id, c.name)
                 displayClients(client)
             })
+            
         })
     }
 
@@ -21,7 +17,6 @@ class ClientsAdapter{
         e.preventDefault()
         if (clientName.value == ""){
             alert("Field Cannot be Empty")
-    
         }
         else{
         let name = clientName.value
@@ -82,7 +77,7 @@ class ClientsAdapter{
             editingClienttId = null
             editingClientId = null
             editingClientName = null
-            submit.innerText = "Add Lift"
+            submit.innerText = "Add Client"
             resetForm()
         })
     }

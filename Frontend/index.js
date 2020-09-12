@@ -1,14 +1,41 @@
 const Clients_URL = "http://localhost:3000/clients"
 const Lifts_url = "http://localhost:3000/lifts"
 const main = document.querySelector('main')
+const h1 = document.querySelector('h1')
 const clientsAdapter = new ClientsAdapter
 const liftsAdapter = new LiftsAdapter
 const clientForm = document.getElementById('ClientForm')
 const clientName = document.getElementById('name')
 const submit = document.getElementById("submit")
 const ul = document.createElement('ul')
+const search = document.getElementById('client-search')
+search.addEventListener('keyup', findClients)
+
 
 document.addEventListener('DOMContentLoaded', clientsAdapter.getClients)
+
+function findClients(){
+    let input = document.querySelector('input').value
+     main.innerHTML = ''
+    const filteredClients = Client.all.filter(function(client){ 
+       
+        return (client.name.includes(input)) 
+    })
+   
+    filteredClients.forEach(function(client){
+
+        displayClients(client)
+    
+    })
+    
+    
+
+   
+    
+    
+}
+
+
 
 clientForm.addEventListener('submit', handleSubmit)
 
@@ -49,9 +76,9 @@ function displayClients(client){
     editBtn.innerText = 'Edit Client'
     editBtn.id = `edit -${client.id}`
     seeLiftBtn.id = `see-lifts ${client.id}`
-    seeLiftBtn.innerText = 'View All Lifts'
+    seeLiftBtn.innerText = 'View All Lifts '
     addLiftBtn.id = `add-lift ${client.id}`
-    addLiftBtn.innerText = "Add Lift"
+    addLiftBtn.innerText = "Add Lift "
     delButton.id = `delete-${client.id}`
     delButton.innerText = "Delete"
     main.appendChild(div)
@@ -67,6 +94,7 @@ function displayClients(client){
     editBtn.addEventListener('click',  editClient)
     
 }
+
 
 let editing = false 
 let editingClienttId = null
@@ -89,21 +117,24 @@ function newLiftForm(){
     const closeForm = document.createElement('button')
     closeForm.innerText = "Close Form"
     liftForm.innerHTML = `
-    <br> ADD NEW LIFT <br>
+    <br>
+     ADD NEW LIFT
+    <br>
     <form class = form id = newLiftForm>
     <label for = "name">Name </label>
     <input type="text"name="name" id="liftName">
     <label for ="weight">Weight</label>
     <input type="integer" name="weight" id="liftWeight">
     <button type="submit" id='submit'> Add Lift</button>
-    </form>`
+     </form>
+    `
     client.appendChild(liftForm)
     liftForm.appendChild(closeForm)
     liftForm.addEventListener('submit', liftsAdapter.createLift)
     closeForm.addEventListener('click', removeForm)
 }
 
-letClientLiftId = null
+
 
 function displayLifts(lift){
     if (!document.getElementById(`lift-${lift.id}`)){
@@ -136,6 +167,7 @@ function displayLifts(lift){
 function closeLifts(container){
     let list = this.parentElement.children[1]
     list.innerText = ""
+    this.remove()
     
 }
 
