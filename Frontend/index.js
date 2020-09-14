@@ -1,5 +1,8 @@
+
+
 const Clients_URL = "http://localhost:3000/clients"
 const Lifts_url = "http://localhost:3000/lifts"
+const body = document.querySelector('body')
 const main = document.querySelector('main')
 const h1 = document.querySelector('h1')
 const clientsAdapter = new ClientsAdapter
@@ -9,23 +12,91 @@ const clientName = document.getElementById('name')
 const submit = document.getElementById("submit")
 const ul = document.createElement('ul')
 const search = document.getElementById('client-search')
+
+const select = document.createElement('select')
+body.insertBefore(select, main)
+// select.options 
+// let defaultOpt= document.createElement('option')
+
+// defaultOpt.innerText = "Select "
+// select.add(defaultOpt)
+
+let clientsArr = []
+
+
+
+document.addEventListener('DOMContentLoaded', () =>{
+    
+    clientsAdapter.getClients()
+    
+    
+    
+
+})
+
+// function checkClient(c){
+//     debugger
+//     Client.all.forEach(function(client){
+//         if (c.id != client.id){
+//             c = new Client(c.id, c.name)
+//             displayClients(c)
+//         }
+//     })
+// }
+
 search.addEventListener('keyup', findClients)
 
+function addOptions(){
+    select.innerHTML = " "
+    let defaultOpt= document.createElement('option')
+    defaultOpt.innerText = "Select "
+    select.add(defaultOpt)
+    Client.all.forEach(function(cl){
+        
+    Opt = document.createElement('option')
+    Opt.innerText = cl.name 
+    select.add(Opt)
+    select.addEventListener('change', selectClient)
+})
+        
+}
 
-document.addEventListener('DOMContentLoaded', clientsAdapter.getClients)
+function selectClient(){
+    if (this.value == "Select"){
+        main.innerText = ''
+        Client.all.forEach(client => displayClients(client))
+    } else{
+    let chosenClient = this.value
+    
+    main.innerHTML = ''
+    const selClient  = Client.all.filter(function(c){
+    return (c.name.includes(chosenClient))
+    })
+
+    selClient.forEach(function(cl){
+    displayClients(cl)
+    })
+    }
+}
+   
+
+
 
 function findClients(){
+    
     let input = document.querySelector('input').value
      main.innerHTML = ''
+    
+
     const filteredClients = Client.all.filter(function(client){ 
-       
+        
         return (client.name.includes(input)) 
     })
-   
+    
     filteredClients.forEach(function(client){
 
         displayClients(client)
-    
+        
     })
     
     
@@ -62,6 +133,7 @@ const removeForm = (e) =>  e.target.parentElement.remove()
 
 
 function displayClients(client){
+    
     const div = document.createElement('div')
     const clientUl = document.createElement('ul')
     clientUl.id = `list-${client.id}`

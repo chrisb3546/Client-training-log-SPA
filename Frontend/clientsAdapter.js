@@ -1,16 +1,23 @@
 class ClientsAdapter{
     
-
+    
      getClients(){
+        main.innerText = ''
+        Client.all = []
         fetch(Clients_URL)
         .then(resToJson)
         .then(function(clients){
             clients.forEach(function (c){
-                let client = new Client(c.id, c.name)
-                displayClients(client)
+                 c = new Client(c.id, c.name)
+                displayClients(c)
+                 addOptions()
             })
             
         })
+           
+            
+             
+        
     }
 
     createClients(e){
@@ -33,10 +40,12 @@ class ClientsAdapter{
         
         fetch(Clients_URL, configObj)
          .then(resToJson)
-         .then(function(client){
+         .then(function(c){
             
-         
+         let client = new Client(c.id, c.name)
          displayClients(client)
+         addOptions(client)
+        
         })
         
         clientForm.reset()
@@ -52,10 +61,15 @@ class ClientsAdapter{
         .then(res => {
             return res.json()})
         .then(client => {
-            this.parentNode.remove()})
+            this.parentNode.remove()
+            clientsAdapter.getClients()
+        })
+            
+            
         }
     
     updateClient(e){
+        
         let name = document.getElementById('name').value
         let configObj = {
         method: "PATCH",
@@ -70,9 +84,11 @@ class ClientsAdapter{
         }
         fetch(`${Clients_URL}/${clienttId}`, configObj)
         .then(resToJson)
-        .then(client=> {
-            let div = document.getElementById(editingClientId)  
-            div.querySelector('h2').innerText = client.name
+        .then(c=> {
+            let div = document.getElementById(editingClientId)
+            
+            div.querySelector('h2').innerText = c.name
+            clientsAdapter.getClients()
             editing = false 
             editingClienttId = null
             editingClientId = null
@@ -80,6 +96,7 @@ class ClientsAdapter{
             submit.innerText = "Add Client"
             resetForm()
         })
+        
     }
 
         
