@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_08_165600) do
+ActiveRecord::Schema.define(version: 2021_01_08_185713) do
 
   create_table "clients", force: :cascade do |t|
     t.string "name"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2021_01_08_165600) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "rom"
     t.integer "repetitions"
-    t.datetime "date"
+    t.string "date"
     t.index ["client_id"], name: "index_lifts_on_client_id"
   end
 

@@ -20,7 +20,8 @@ class LiftsController < ApplicationController
 
   # POST /lifts
   def create
-    client = Client.find(params[:client_id])
+  
+    client = Client.find_by(id: params[:client_id])
     @lift = client.lifts.build(lift_params)
     
     if @lift.save
@@ -54,6 +55,6 @@ class LiftsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def lift_params
-      params.require(:lift).permit(:name, :weight, :client_id)
+      params.require(:lift).permit(:name, :weight, :rom, :repetitions, :date, :client_id)
     end
 end
