@@ -52,21 +52,7 @@ class ClientsAdapter{
     }
     }
 
-    deleteClient(){
-        let clientId = this.id.split('-')[1]
-        this.parentNode
-        fetch(`${Clients_URL}/${clientId}`,{
-            method: "DELETE",
-        })
-        .then(res => {
-            return res.json()})
-        .then(client => {
-            this.parentNode.remove()
-            clientsAdapter.getClients()
-        })
-            
-            
-        }
+    
     
     updateClient(e){
         

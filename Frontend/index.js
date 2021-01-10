@@ -192,17 +192,9 @@ function newLiftForm(){
     <br>
      ADD NEW LIFT
     <br>
-    <form class = form id = newLiftForm>
-    <label for = "name">Name </label>
-    <input type="text"name="name" id="liftName">
-    <label for ="weight">Weight</label>
-    <input type="integer" name="weight" id="liftWeight">
-    <label for ="repetitions">Repetitions</label>
-    <input type="integer" name="repetitions" id="liftRepetitions">
-    <label for ="rom">ROM</label>
-    <input type="text" name="rom" id="liftRom">
-    <label for ="date">Date</label>
-    <input type="text" name="date" id="liftDate">
+    <form class=form id=newLiftForm>
+    <label for = "description">Description </label>
+    <textarea name="description" id="liftDescription"></textarea>
     <button type="submit" id='submit'> Add Lift</button>
      </form>
     `
@@ -215,16 +207,11 @@ function newLiftForm(){
 
 
 function displayLifts(lift){
-    debugger
     if (!document.getElementById(`lift-${lift.id}`)){
         const liftHeader = document.createElement('h4')
         liftHeader.innerText = `${lift.name}, ${lift.weight}`
         liftHeader.id = `lift-${lift.id}`
-        liftHeader.innerText = `${lift.name}, 
-        weight:${lift.weight}
-        rom:${lift.rom}
-        repetitions: ${lift.repetitions}
-        date: ${lift.date}`
+        liftHeader.innerText = `${lift.description} `
         const delButton = document.createElement('button')
         delButton.innerText = "Delete Lift"
         const closeLiftsButton = document.createElement('button')

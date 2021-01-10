@@ -10,18 +10,10 @@ class LiftsAdapter{
         
         let liftForm = document.querySelector('form')
         let client_id = this.parentNode.id.split('-')[1]
-        let liftName = document.getElementById('liftName')
-        let liftWeight = document.getElementById('liftWeight')
-        let liftRepetitions = document.getElementById('liftRepetitions')
-        let liftRom = document.getElementById('liftRom')
-        let liftDate = document.getElementById('liftDate')
-        let name = liftName.value
-        let weight = liftWeight.value
-        let rom = liftRom.value
-        let repetitions = liftRepetitions.value
-        let date = liftDate.value
-        debugger
-        if (liftName.value == ""){
+        let liftDescription = document.getElementById("liftDescription")
+        let description = liftDescription.value
+       
+        if (liftDescription.value == ""){
             alert("Field Cannot be Empty")
         }
         else{
@@ -32,13 +24,8 @@ class LiftsAdapter{
                 Accept: "application/json"
             },
             body: JSON.stringify({
-                name, 
-                weight, 
-                client_id,
-                rom, 
-                repetitions,
-                date
-
+                description,  
+                client_id
             })
             }
             fetch("http://localhost:3000/lifts", configObj)
@@ -59,7 +46,7 @@ class LiftsAdapter{
         .then(resToJson)
         .then(function(lifts) {
            lifts.forEach(function (l){
-            let lift = new Lift(l.id, l.name, l.weight, l.rom, l.repetitions, l.date, l.client_id)
+            let lift = new Lift(l.id, l.description, l.client_id)
             displayLifts(lift)
             }
         )}

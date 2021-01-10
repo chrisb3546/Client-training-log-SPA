@@ -55,6 +55,6 @@ class LiftsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def lift_params
-      params.require(:lift).permit(:name, :weight, :rom, :repetitions, :date, :client_id)
+      params.require(:lift).permit(:description, :client_id)
     end
 end
