@@ -4,6 +4,7 @@ const Clients_URL = "http://localhost:3000/clients"
 const Lifts_url = "http://localhost:3000/lifts"
 const body = document.querySelector('body')
 const main = document.querySelector('main')
+
 const h1 = document.querySelector('h1')
 const clientsAdapter = new ClientsAdapter
 const liftsAdapter = new LiftsAdapter
@@ -99,15 +100,16 @@ function findClients(){
 function findLifts (){
     
     let input = document.getElementById('lift-search').value
-    
+    const liftContainer = document.getElementById("list-1")
+    liftContainer.innerHTML = ' '
 
     const filteredLifts = Lift.all.filter(function (lift){
         return (lift.description.includes(input))
     })
 
     filteredLifts.forEach( function(lift){
-        searchedLifts(lift)
-    } )
+        displayLifts(lift)
+    })
 
 
 }
@@ -253,8 +255,6 @@ function searchedLifts (lift){
         container.innerText = ''
     // if (!document.getElementById(`lift-${lift.id}`)){
         liftHeader = document.createElement('h4')
-        
-        liftHeader.innerText = `${lift.name}, ${lift.weight}`
         liftHeader.id = `lift-${lift.id}`
         liftHeader.innerText = `${lift.description} `
         const delButton = document.createElement('button')

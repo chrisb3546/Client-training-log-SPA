@@ -21,7 +21,6 @@ class ClientsAdapter{
     }
 
     getClient(){
-        debugger
         let clientId = this.id.split('-')[1]
         main.innerText = ''
         Client.all = []
