@@ -12,6 +12,8 @@ const clientName = document.getElementById('name')
 const submit = document.getElementById("submit")
 const ul = document.createElement('ul')
 const search = document.getElementById('client-search')
+const liftSearch = document.getElementById('lift-search')
+let liftHeader;
 
 const select = document.createElement('select')
 body.insertBefore(select, main)
@@ -34,17 +36,9 @@ document.addEventListener('DOMContentLoaded', () =>{
 
 })
 
-// function checkClient(c){
-//     debugger
-//     Client.all.forEach(function(client){
-//         if (c.id != client.id){
-//             c = new Client(c.id, c.name)
-//             displayClients(c)
-//         }
-//     })
-// }
 
 search.addEventListener('keyup', findClients)
+liftSearch.addEventListener( 'keyup', findLifts)
 
 function addOptions(){
     select.innerHTML = " "
@@ -84,7 +78,7 @@ function selectClient(){
 
 function findClients(){
     
-    let input = document.querySelector('input').value
+    let input = document.getElementById('client-search').value
      main.innerHTML = ''
     
 
@@ -100,10 +94,22 @@ function findClients(){
     })
     
     
+}
 
-   
+function findLifts (){
     
+    let input = document.getElementById('lift-search').value
     
+
+    const filteredLifts = Lift.all.filter(function (lift){
+        return (lift.description.includes(input))
+    })
+
+    filteredLifts.forEach( function(lift){
+        searchedLifts(lift)
+    } )
+
+
 }
 
 
@@ -140,7 +146,42 @@ function displayClients(client){
     div.id = `parent-${client.id}`
     const clientListName = document.createElement('h2')
     clientListName.id = `client-${client.id}`
-    clientListName.innerText = `${client.name} `
+    clientListName.innerHTML = `${client.name} `
+    const delButton = document.createElement('button')
+    // const addLiftBtn = document.createElement('button')
+    // const seeLiftBtn = document.createElement('button')
+    const editBtn = document.createElement('button')
+    editBtn.innerText = 'Edit Client'
+    editBtn.id = `edit -${client.id}`
+    // seeLiftBtn.id = `see-lifts ${client.id}`
+    // seeLiftBtn.innerText = 'View All Lifts '
+    // addLiftBtn.id = `add-lift ${client.id}`
+    // addLiftBtn.innerText = "Add Lift "
+    delButton.id = `delete-${client.id}`
+    delButton.innerText = "Delete"
+    main.appendChild(div)
+    div.appendChild(clientListName)
+    div.appendChild(clientUl)
+    div.appendChild(delButton)
+    // div.appendChild(addLiftBtn)
+    // div.appendChild(seeLiftBtn)
+    div.appendChild(editBtn)
+    delButton.addEventListener('click', clientsAdapter.deleteClient)
+    // addLiftBtn.addEventListener('click', newLiftForm)
+    // seeLiftBtn.addEventListener('click', liftsAdapter.getLifts)
+    editBtn.addEventListener('click',  editClient)
+    clientListName.addEventListener('click', clientsAdapter.getClient)
+    
+}
+
+function displayClient(client){
+    const div = document.createElement('div')
+    const clientUl = document.createElement('ul')
+    clientUl.id = `list-${client.id}`
+    div.id = `parent-${client.id}`
+    const clientListName = document.createElement('h2')
+    clientListName.id = `client-${client.id}`
+    clientListName.innerHTML = `${client.name} `
     const delButton = document.createElement('button')
     const addLiftBtn = document.createElement('button')
     const seeLiftBtn = document.createElement('button')
@@ -164,8 +205,9 @@ function displayClients(client){
     addLiftBtn.addEventListener('click', newLiftForm)
     seeLiftBtn.addEventListener('click', liftsAdapter.getLifts)
     editBtn.addEventListener('click',  editClient)
-    
+    clientListName.addEventListener('click', clientsAdapter.getClient)
 }
+
 
 
 let editing = false 
@@ -204,11 +246,39 @@ function newLiftForm(){
     closeForm.addEventListener('click', removeForm)
 }
 
-
+function searchedLifts (lift){
+        let client = document.getElementById(`client-${lift.client_id}`)
+        let parent = client.parentElement
+        let container = parent.children[1]
+        container.innerText = ''
+    // if (!document.getElementById(`lift-${lift.id}`)){
+        liftHeader = document.createElement('h4')
+        
+        liftHeader.innerText = `${lift.name}, ${lift.weight}`
+        liftHeader.id = `lift-${lift.id}`
+        liftHeader.innerText = `${lift.description} `
+        const delButton = document.createElement('button')
+        delButton.innerText = "Delete Lift"
+        const closeLiftsButton = document.createElement('button')
+        closeLiftsButton.innerText = "Close Lifts"
+        closeLiftsButton.id = `closeButton-${lift.client_id}`
+        
+        
+        container.appendChild(liftHeader)
+        liftHeader.appendChild(delButton)
+        delButton.addEventListener('click', liftsAdapter.removeLift)
+        if (!document.getElementById(`closeButton-${lift.client_id}`)){
+            parent.appendChild(closeLiftsButton)
+            closeLiftsButton.addEventListener('click', closeLifts)
+        }
+    
+   
+    // }
+}
 
 function displayLifts(lift){
     if (!document.getElementById(`lift-${lift.id}`)){
-        const liftHeader = document.createElement('h4')
+        liftHeader = document.createElement('h4')
         liftHeader.innerText = `${lift.name}, ${lift.weight}`
         liftHeader.id = `lift-${lift.id}`
         liftHeader.innerText = `${lift.description} `

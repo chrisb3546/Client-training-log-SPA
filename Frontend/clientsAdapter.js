@@ -20,6 +20,19 @@ class ClientsAdapter{
         
     }
 
+    getClient(){
+        debugger
+        let clientId = this.id.split('-')[1]
+        main.innerText = ''
+        Client.all = []
+        Lift.all = []
+         fetch(`http://localhost:3000/clients/${clientId}`)
+         .then(resToJson)
+         .then(function(client){
+             displayClient(client)
+         })
+    }
+
     createClients(e){
         e.preventDefault()
         if (clientName.value == ""){

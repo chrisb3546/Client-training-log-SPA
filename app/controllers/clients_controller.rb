@@ -10,6 +10,7 @@ class ClientsController < ApplicationController
 
   # GET /clients/1
   def show
+    
     render json: @client
   end
 
